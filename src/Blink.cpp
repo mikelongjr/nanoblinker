@@ -1,7 +1,6 @@
 /*
  * Blink
- * Turns on an LED on for one second,
- * then off for one second, repeatedly.
+ * Uses software generated PWM to make an LED pulse
  */
 
 #include <Arduino.h>
