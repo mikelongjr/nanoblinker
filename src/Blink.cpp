@@ -2,16 +2,8 @@
  * Blink
  * Uses software generated PWM to make an LED pulse
  */
-
 #include <Arduino.h>
-
-unsigned long timer0,timer1,dutyTime,cycleTime;
-unsigned long pwmTime,pwmDuty,pulseUpdateTime;
-unsigned long pulseCycleTime,pwmAdv;
-bool ledON,countUP;
-// #ifndef LED_BUILTIN
-//   #define LED_BUILTIN PC13
-// #endif
+#include <Blink.h>
 
 void setup()
 {
@@ -36,9 +28,17 @@ void setup()
 void loop()
 {
     cycleTime = timer1-timer0;  // get time since last loop started
+    // update the white LED
+    pulseWhite();
+    // increment the timer for the next loop
+    timer0 = timer1;
+    timer1 = micros();
+}
+
+void pulseWhite()
+{
     dutyTime += cycleTime;      // update the duty cycle timer
     pulseCycleTime += cycleTime;  // update the PWM cycle time
-
     // if the duty timer passes the PWM duty cycle time
     // turn the led OFF
     if(dutyTime > pwmDuty && ledON)  
@@ -88,7 +88,4 @@ void loop()
       }
     }
 
-    // increment the timer for the next loop
-    timer0 = timer1;
-    timer1 = micros();
 }
